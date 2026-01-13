@@ -106,7 +106,7 @@ class Trainer:
         }
 
     def run(self) -> Dict[str, Any]:
-        device, device_type = Utils.get_device()
+        device, device_type = Utils.get_device(self.gpu_index)
 
         if device.type == "cuda":
             torch.cuda.empty_cache()

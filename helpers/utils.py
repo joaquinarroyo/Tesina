@@ -41,6 +41,13 @@ class Utils:
         return datetime.now().strftime("%Y%m%d_%H%M%S_%f")
 
     @staticmethod
-    def get_device() -> Tuple[torch.device, str]:
-        dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        return dev, ("cuda" if dev.type == "cuda" else "cpu")
+    def get_device(gpu_index: int = 0) -> Tuple[torch.device, str]:
+        """
+        Returns (device, device_type_str).
+        If CUDA available, selects the GPU at gpu_index.
+        """
+        if torch.cuda.is_available():
+            torch.cuda.set_device(gpu_index)
+            dev = torch.device(f"cuda:{gpu_index}")
+            return dev, "cuda"
+        return torch.device("cpu"), "cpu"
