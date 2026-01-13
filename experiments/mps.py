@@ -264,8 +264,19 @@ def main() -> None:
     if not args.no_mps_check:
         start_mps()
 
-    # Expandir experimentos si hay repeat
+    # Expandir experimentos:
+    # - Si --parallel N y solo 1 exp: crear N copias del mismo experimento
+    # - Si --repeat N: repetir toda la lista N veces
     experiments = args.exp * args.repeat
+    
+    # Si se especifica --parallel y es mayor que el número de experimentos,
+    # replicar para tener exactamente parallel instancias
+    if args.parallel and args.parallel > len(experiments):
+        # Replicar cíclicamente hasta tener parallel experimentos
+        base_exps = experiments.copy()
+        while len(experiments) < args.parallel:
+            experiments.extend(base_exps)
+        experiments = experiments[:args.parallel]
 
     # Determinar paralelismo
     parallel = args.parallel if args.parallel else len(experiments)
