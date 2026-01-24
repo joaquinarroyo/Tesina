@@ -208,3 +208,6 @@ __marimo__/
 
 # Project datasets
 data/
+
+# Nvidia Drivers
+*.run

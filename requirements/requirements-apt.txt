@@ -1,0 +1,7 @@
+# Dependencias APT del sistema
+# Instalar con: cat requirements-apt.txt | xargs apt-get install -y -qq
+
+git
+openssh-client
+task-spooler
+nvtop
